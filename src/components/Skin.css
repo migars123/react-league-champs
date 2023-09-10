@@ -1,0 +1,22 @@
+.skin{
+    border-image: linear-gradient(#775928, #c6a96c) 30%;
+    border-width: 2px;
+    border-style: solid;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    aspect-ratio: 16/9;
+    
+    scroll-snap-align: center;
+}
+
+.skin:hover{
+    filter: none !important;
+}
+
+.isSelected{
+    height: 87% !important;
+    filter: none !important;
+}
