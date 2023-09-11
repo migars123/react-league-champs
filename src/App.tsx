@@ -4,7 +4,6 @@ import './App.css';
 import Card from './components/Card';
 import Skin from './components/Skin';
 import data from '../public/data/LeagueOfLegends/13.16.1/data/en_US/champion.json'
-import { type } from 'os';
 import ReactDOM from 'react-dom';
 
 import ReactLogo from '../public/arrow.svg';
@@ -17,7 +16,7 @@ async function getAllChampionSkins(name: string, clickHandler?: any){
   const skins = json["data"][name]["skins"]
 
   const jsxElement =
-      Object.keys(skins).map((key: string, index) => (
+      Object.keys(skins).map((key: string) => (
           <Skin
             title={skins[key]["name"]}
             image={dataImagePath + name + `_${skins[key]["num"]}.jpg`}
