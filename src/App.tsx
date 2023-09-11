@@ -16,7 +16,7 @@ async function getAllChampionSkins(name: string, clickHandler?: any){
   const skins = json["data"][name]["skins"]
 
   const jsxElement =
-      Object.keys(skins).map((key: string) => (
+      Object.keys(skins).map((key: string, index) => (
           <Skin
             title={skins[key]["name"]}
             image={dataImagePath + name + `_${skins[key]["num"]}.jpg`}
