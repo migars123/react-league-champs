@@ -6,12 +6,12 @@ import Skin from './components/Skin';
 import data from '../public/data/LeagueOfLegends/13.16.1/data/en_US/champion.json'
 import ReactDOM from 'react-dom';
 
-import ReactLogo from '../public/arrow.svg';
+import ReactLogo from '/arrow.svg';
 
 const dataImagePath = '../react-league-champs/data/LeagueOfLegends/img/champion/centered/'
 
 async function getAllChampionSkins(name: string, clickHandler?: any){
-  let data = await fetch(`../public/data/LeagueOfLegends/13.16.1/data/en_US/champion/${name}.json`)
+  let data = await fetch(`../react-league-champs/data/LeagueOfLegends/13.16.1/data/en_US/champion/${name}.json`)
   let json = await data.json()
   const skins = json["data"][name]["skins"]
 
