@@ -99,12 +99,12 @@ function App() {
 
     const champIndex = +event.currentTarget.parentElement?.parentElement?.parentElement?.getAttribute('data-index')!
 
-    if(selSkinIndex == 0 || selSkinIndex == skins.length-1){
-      return
-    }
-
-    selSkin.classList.remove("isSelected")
+    
     if(message == "left"){
+      if(selSkinIndex == 0){
+        return;
+      }
+      selSkin.classList.remove("isSelected")
       skins[selSkinIndex-1].classList.add("isSelected")
       cardElements[champIndex].current.changeImage(skins[selSkinIndex-1].getAttribute('data-image')!);
 
@@ -112,6 +112,10 @@ function App() {
       
     }
     if(message == "right"){
+      if(selSkinIndex == skins.length-1){
+        return;
+      }
+      selSkin.classList.remove("isSelected")
       skins[selSkinIndex+1].classList.add("isSelected")
       cardElements[champIndex].current.changeImage(skins[selSkinIndex+1].getAttribute('data-image')!);
       
