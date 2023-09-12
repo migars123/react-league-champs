@@ -1,9 +1,9 @@
 {
+  "homepage": "https://migars123.github.io/react-league-champs",
   "name": "react-webapp-test",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://migars123.github.io/react-league-champs",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
