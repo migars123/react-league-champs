@@ -18,7 +18,7 @@ const Skin = ({ title, image, width, isSelected, onClickHandler = () => {}}: Pro
       filter: 'brightness(40%)',
     };
     return (
-        <div data-image={image} style={cardStyle} className={isSelected ? 'skin isSelected' : 'skin'}  onClick={(event) => onClickHandler(event, "Hello World!")}></div>
+        <div data-image={image} data-name={title ? title : 'default skin'} style={cardStyle} className={isSelected ? 'skin isSelected' : 'skin'}  onClick={(event) => onClickHandler(event, "Hello World!")}></div>
     )
 }
 

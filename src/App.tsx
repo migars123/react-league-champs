@@ -18,7 +18,7 @@ async function getAllChampionSkins(name: string, clickHandler?: any){
   const jsxElement =
       Object.keys(skins).map((key: string, index) => (
           <Skin
-            title={skins[key]["name"]}
+            title={skins[key]["num"] == 0 ? name : skins[key]["name"]}
             image={dataImagePath + name + `_${skins[key]["num"]}.jpg`}
             width='25%'
             isSelected = {skins[key]["num"] == 0 ? true : false}
@@ -96,6 +96,8 @@ function App() {
     const skins = Array.prototype.slice.call(skinContainer.children);
     const selSkin = skinContainer.querySelector('.isSelected')!
     const selSkinIndex = skins.indexOf(selSkin)
+    const champCardElement = skinContainer.parentElement!.parentElement!;
+    const champNameElelement = champCardElement.querySelector('.card-title')!;
 
     const champIndex = +event.currentTarget.parentElement?.parentElement?.parentElement?.getAttribute('data-index')!
 
@@ -107,6 +109,7 @@ function App() {
       selSkin.classList.remove("isSelected")
       skins[selSkinIndex-1].classList.add("isSelected")
       cardElements[champIndex].current.changeImage(skins[selSkinIndex-1].getAttribute('data-image')!);
+      champNameElelement.textContent = skins[selSkinIndex-1].getAttribute('data-name')!;
 
       snapToElement(skins[selSkinIndex-1], skinContainer)
       
@@ -118,6 +121,7 @@ function App() {
       selSkin.classList.remove("isSelected")
       skins[selSkinIndex+1].classList.add("isSelected")
       cardElements[champIndex].current.changeImage(skins[selSkinIndex+1].getAttribute('data-image')!);
+      champNameElelement.textContent = skins[selSkinIndex+1].getAttribute('data-name')!;
       
       snapToElement(skins[selSkinIndex+1], skinContainer)
     }
@@ -130,11 +134,14 @@ function App() {
     const skinContainerElement = skinClickedElement.parentElement!;
     const champCardElement = skinContainerElement.parentElement!.parentElement!;
     const champIndex = +champCardElement.parentElement!.getAttribute('data-index')!
+    const champNameElelement = champCardElement.querySelector('.card-title')!;
 
     skinContainerElement.querySelectorAll(".isSelected").forEach((element) => element.classList.remove("isSelected"));
     skinClickedElement.classList.add("isSelected")
     
     cardElements[champIndex].current.changeImage(skinClickedElement.getAttribute('data-image')!);
+    champNameElelement.textContent = skinClickedElement.getAttribute('data-name')!;
+
 
     snapToElement(skinClickedElement, skinContainerElement)
 
