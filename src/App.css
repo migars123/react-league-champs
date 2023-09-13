@@ -11,7 +11,7 @@ body{
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Adjust minmax and spacing */
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); /* Adjust minmax and spacing */
   gap: 20px; /* Adjust the gap as needed */
   padding: 20px; /* Add some padding to the grid container */
 }

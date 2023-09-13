@@ -50,11 +50,12 @@ function App() {
     cardElements[i] = useRef();
   });
   
-
-  const cardHeight: number = 120;
+  const cardHeight = 150;
+  const cardHeightCss: React.CSSProperties = {
+    height: `${cardHeight}px`,
+  };
   const cardGap: number = 20;
   const cardWidth: number = undefined!;
-
 
   let selCard: HTMLElement = undefined!
 
@@ -73,16 +74,17 @@ function App() {
   function delayedZIndex(element: HTMLElement)
   {
   setTimeout(function(){
-    if(element.style.height == (cardHeight ? `${cardHeight}px` : '100%')){
+    if(element.style.height == ('100%')){
       element.style.zIndex = ""
     }
     
   },500);
   }
   function snapToElement(targetElement: HTMLElement, scrollContainerElement: HTMLElement) {
+    const minMaxWidth = +$('.card-grid').css('grid-template-columns').split(' ')[0].slice(0,-2);
     const containerRect = scrollContainerElement.getBoundingClientRect();
     const elementRect = targetElement.getBoundingClientRect();
-    const positionToSnap = scrollContainerElement.scrollLeft + (elementRect.left - containerRect.left) - 125;
+    const positionToSnap = scrollContainerElement.scrollLeft + (elementRect.left - containerRect.left) - (minMaxWidth/3);
     
     scrollContainerElement.scrollTo({
       left: positionToSnap,
@@ -159,7 +161,7 @@ function App() {
 
     if(selCard || selCard == currentTarget){
       selCard.removeAttribute('style')
-      selCard.style.height = cardHeight ? `${cardHeight}px` : '100%'
+      selCard.style.height = '100%'
       selCard.style.width = cardWidth ? `${cardWidth}px` : '100%'
       selCard.style.zIndex = "10"
       const expandArrow = selCard.querySelector<HTMLElement>('.expandArrow')!;
@@ -201,18 +203,19 @@ function App() {
     selCard = currentTarget
 
   }
+  
 
   return (
     <div className="card-grid">
       {Object.keys(cardData).map((key: string, index) => (
-        <div className='Card' data-index={index} data-id={cardData[key]["id"]}>
+        <div className='Card' data-index={index} data-id={cardData[key]["id"]} style={cardHeightCss}>
           <Card
             ref={cardElements[index]}
             onClickHandler={clickHandlerChamp}
             key={cardData[key]["key"]}
             image={dataImagePath + cardData[key]["image"]["full"].replace(".png", "_0.jpg")}
             width={cardWidth ? `${cardWidth}px` : '100%'}
-            height={cardHeight ? `${cardHeight}px` : '100%'}
+            height={'100%'}
             imageOffset='50% 25%'
             //isBlur
             isDarken
