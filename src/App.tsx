@@ -62,7 +62,7 @@ function App() {
   function GetGridElementsPosition(index: any){
     //Get the css attribute grid-template-columns from the css of class grid
     //split on whitespace and get the length, this will give you how many columns
-    const colCount = $('.card-grid').css('grid-template-columns').split(' ').length;
+    const colCount = $('#card-grid').css('grid-template-columns').split(' ').length;
 
     const rowPosition = Math.floor(index / colCount);
     const colPosition = index % colCount;
@@ -81,7 +81,7 @@ function App() {
   },500);
   }
   function snapToElement(targetElement: HTMLElement, scrollContainerElement: HTMLElement) {
-    const minMaxWidth = +$('.card-grid').css('grid-template-columns').split(' ')[0].slice(0,-2);
+    const minMaxWidth = +$('#card-grid').css('grid-template-columns').split(' ')[0].slice(0,-2);
     const containerRect = scrollContainerElement.getBoundingClientRect();
     const elementRect = targetElement.getBoundingClientRect();
     const positionToSnap = scrollContainerElement.scrollLeft + (elementRect.left - containerRect.left) - (minMaxWidth/3);
@@ -91,6 +91,25 @@ function App() {
       behavior: 'smooth',
     });
   }
+
+  const champFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.toLowerCase();
+
+    $('#card-grid').children('.Card').each(function () {
+      const champName = this.getAttribute('data-name');
+      if(!champName){
+        return
+      }
+
+      if(champName.toLowerCase().indexOf(value) > -1) {
+        this.style.display = "";
+      } else {
+        this.style.display = "none";
+      }
+
+  });
+  
+  };
 
   const clickHandlerArrows = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, message: any) => {
     event.stopPropagation()
@@ -206,38 +225,45 @@ function App() {
   
 
   return (
-    <div className="card-grid">
-      {Object.keys(cardData).map((key: string, index) => (
-        <div className='Card' data-index={index} data-id={cardData[key]["id"]} style={cardHeightCss}>
-          <Card
-            ref={cardElements[index]}
-            onClickHandler={clickHandlerChamp}
-            key={cardData[key]["key"]}
-            image={dataImagePath + cardData[key]["image"]["full"].replace(".png", "_0.jpg")}
-            width={cardWidth ? `${cardWidth}px` : '100%'}
-            height={'100%'}
-            imageOffset='50% 25%'
-            //isBlur
-            isDarken
-          >
-            <h1 className='card-title'>{cardData[key]["name"]}</h1>
-
-            <i className="expandArrow"></i>
-
-            <div className='skinSelectorContainer hidden'>
-
-
-              <img src={ReactLogo} alt="React Logo" className='leagueArrow' onClick={(event) => clickHandlerArrows(event, "left")}/>
-
-
-              <div className='skinContainer'></div>
-
-              <img src={ReactLogo} alt="React Logo" className='leagueArrow right' onClick={(event) => clickHandlerArrows(event, "right")}/>
-
-            </div>
-          </Card>
+    <div className='gridContainer'>
+      <div className='searchBarContainer'>
+        <div className='searchBar'>
+          <input type="search" name="champ-search" id="champ-search" placeholder='Search' onChange={champFilter}/>
         </div>
-      ))}
+      </div>
+      <div id="card-grid">
+        {Object.keys(cardData).map((key: string, index) => (
+          <div className='Card' data-index={index} data-id={cardData[key]["id"]} data-name={cardData[key]["name"]} style={cardHeightCss}>
+            <Card
+              ref={cardElements[index]}
+              onClickHandler={clickHandlerChamp}
+              key={cardData[key]["key"]}
+              image={dataImagePath + cardData[key]["image"]["full"].replace(".png", "_0.jpg")}
+              width={cardWidth ? `${cardWidth}px` : '100%'}
+              height={'100%'}
+              imageOffset='50% 25%'
+              //isBlur
+              isDarken
+            >
+              <h1 className='card-title'>{cardData[key]["name"]}</h1>
+
+              <i className="expandArrow"></i>
+
+              <div className='skinSelectorContainer hidden'>
+
+
+                <img src={ReactLogo} alt="React Logo" className='leagueArrow' onClick={(event) => clickHandlerArrows(event, "left")}/>
+
+
+                <div className='skinContainer'></div>
+
+                <img src={ReactLogo} alt="React Logo" className='leagueArrow right' onClick={(event) => clickHandlerArrows(event, "right")}/>
+
+              </div>
+            </Card>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
